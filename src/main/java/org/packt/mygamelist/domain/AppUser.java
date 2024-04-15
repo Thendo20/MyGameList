@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.List;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,28 +26,24 @@ public class AppUser {
     @Column(nullable = false)
     private String password;
 
-    private int no_liked_games = 0;
+    @Column
+    private int NoLikedGames = 0;
 
     @JsonIgnore
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "user_game",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "game_id")
+    )
 
     private List<Game> games;
 
 
-    public AppUser(){
-    }
-    public AppUser(String username, String password){
-        super();
+    public AppUser(String username, String password) {
         this.username = username;
         this.password = password;
     }
-
-    public void inc_liked_games(){
-        this.no_liked_games++;
-    }
-
-    public int no_like_games(){
-        return this.no_liked_games;
-    }
-
 }
