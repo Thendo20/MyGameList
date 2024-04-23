@@ -34,12 +34,15 @@ public class Game {
     private List<AppUser> users;
 
 
-    public Game(String name, String summary, int price, boolean IsGameAvail, String platforms, List<AppUser> users) {
+    public Game(String name, String summary, int price, boolean IsGameAvail, String platforms) {
         this.name = name;
         this.summary = summary;
         this.price = price;
         this.IsGameAvail = IsGameAvail;
         this.platforms = platforms;
-        this.users = users;
+    }
+
+    public Boolean getIsGameAvail() {
+        return IsGameAvail;
     }
 }
