@@ -12,8 +12,6 @@ import java.util.Optional;
 @Service
 public class GameService {
     private final GameRepository gameRepository;
-
-    @Autowired
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
         this.gameRepository.saveAll(defaultGames());
