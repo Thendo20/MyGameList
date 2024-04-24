@@ -82,10 +82,7 @@ public class GameServiceTest {
         when(gameRepository.findByName(any())).thenReturn(Optional.of(game));
         when(gameRepository.save(any())).thenReturn(updated);
 
-        Game newGame = new Game("GTA 5", "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
-                "entangled with some of the most frightening and deranged elements of the criminal underworld," +
-                "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
-                "heists to survive in a ruthless city in which they can trust nobody--least of all one another.", 1000, true,
+        Game newGame = new Game("GTA 5", summary, 1000, true,
                 "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows");
         Optional<Game> updatedGame = gameService.update(newGame);
         assertThat(updatedGame.isPresent()).isEqualTo(true);
