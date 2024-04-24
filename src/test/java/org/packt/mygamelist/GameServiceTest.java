@@ -27,10 +27,16 @@ public class GameServiceTest {
     private GameService gameService;
     private AutoCloseable autoCloseable;
 
+    private String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
+            "entangled with some of the most frightening and deranged elements of the criminal underworld," +
+            "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
+            "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
+
     @BeforeEach
     void init() {
-         autoCloseable = MockitoAnnotations.openMocks(GameServiceTest.class);
+        autoCloseable = MockitoAnnotations.openMocks(GameServiceTest.class);
     }
+
     @AfterEach
     void close() throws Exception {
         autoCloseable.close();
@@ -38,19 +44,14 @@ public class GameServiceTest {
 
     @Test
     void findAllGames() {
-
-        String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
-                "entangled with some of the most frightening and deranged elements of the criminal underworld," +
-                "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
-                "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
-
-        when(gameRepository.findAll()).thenReturn(List.of( new Game("GTA 5", summary, 500, true,
-                        "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows")));
+        when(gameRepository.findAll()).thenReturn(List.of(new Game("GTA 5", summary, 500, true,
+                "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows")));
 
         List<Game> games = gameService.findAll();
         assertThat(games.size()).isEqualTo(1);
         assertThat(games.get(0).getName()).isEqualTo("GTA 5");
     }
+
     @Test
     void createGame() {
         String summary = "Hollow Knight is a 2D side-scrolling Metroidvania. " +
@@ -58,9 +59,9 @@ public class GameServiceTest {
                 "who explores an underground fallen kingdom called Hallownest. The Knight can strike " +
                 "enemies with a sword-like weapon called a Nail and can learn spells that allow for long-range attacks.";
 
-        when(gameRepository.save(any())).thenReturn( new Game("Hollow Knight", summary, 500, true,
+        when(gameRepository.save(any())).thenReturn(new Game("Hollow Knight", summary, 500, true,
                 "Playstation 4/5, Xbox one/series X/series S/ Windows"));
-        when(gameRepository.findByName(any())).thenReturn( Optional.of(new Game("Hollow Knight", summary, 500, true,
+        when(gameRepository.findByName(any())).thenReturn(Optional.of(new Game("Hollow Knight", summary, 500, true,
                 "Playstation 4/5, Xbox one/series X/series S/ Windows")));
 
         Game newGame = new Game("Hollow Knight", summary,
@@ -68,15 +69,11 @@ public class GameServiceTest {
         gameService.create(newGame);
         Optional<Game> games = gameService.findByName("Hollow Knight");
         assertThat(games.isPresent()).isEqualTo(true);
-        assertThat( games.get().getName()).isEqualTo("Hollow Knight");
+        assertThat(games.get().getName()).isEqualTo("Hollow Knight");
     }
+
     @Test
     void updateGame() {
-        String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
-                "entangled with some of the most frightening and deranged elements of the criminal underworld," +
-                "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
-                "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
-
         Game game = new Game("GTA 5", summary, 500, true,
                 "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows");
         Game updated = new Game("GTA 5", summary, 1000, true,
@@ -85,9 +82,9 @@ public class GameServiceTest {
         when(gameRepository.findByName(any())).thenReturn(Optional.of(game));
         when(gameRepository.save(any())).thenReturn(updated);
 
-        Game newGame = new Game("GTA 5", "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves"+
-                "entangled with some of the most frightening and deranged elements of the criminal underworld,"+
-                "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous"+
+        Game newGame = new Game("GTA 5", "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
+                "entangled with some of the most frightening and deranged elements of the criminal underworld," +
+                "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
                 "heists to survive in a ruthless city in which they can trust nobody--least of all one another.", 1000, true,
                 "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows");
         Optional<Game> updatedGame = gameService.update(newGame);
@@ -98,12 +95,7 @@ public class GameServiceTest {
 
     @Test
     void findGameByPrice() {
-        String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
-                "entangled with some of the most frightening and deranged elements of the criminal underworld," +
-                "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
-                "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
-
-        when(gameRepository.findByPrice(anyInt())).thenReturn(List.of( new Game("GTA 5", summary, 500, true,
+        when(gameRepository.findByPrice(anyInt())).thenReturn(List.of(new Game("GTA 5", summary, 500, true,
                 "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows")));
         List<Game> games = gameService.findByPrice(500);
         assertThat(games.size() > 0).isTrue();
@@ -112,17 +104,14 @@ public class GameServiceTest {
 
     @Test
     void findGameByIsGameAvail() {
-        String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
-                "entangled with some of the most frightening and deranged elements of the criminal underworld," +
-                "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
-                "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
 
-        when(gameRepository.findByIsGameAvail(anyBoolean())).thenReturn(List.of( new Game("GTA 5", summary, 500, true,
+        when(gameRepository.findByIsGameAvail(anyBoolean())).thenReturn(List.of(new Game("GTA 5", summary, 500, true,
                 "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows")));
 
         List<Game> games = gameService.findByIsGameAvail(true);
         assertThat(games.getFirst().getIsGameAvail()).isEqualTo(true);
     }
+
     @Test
     void deleteGame() {
         gameService.delete("GTA 5");

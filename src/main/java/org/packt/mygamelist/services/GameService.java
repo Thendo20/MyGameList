@@ -12,6 +12,7 @@ import java.util.Optional;
 @Service
 public class GameService {
     private final GameRepository gameRepository;
+
     @Autowired
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
@@ -64,7 +65,7 @@ public class GameService {
 
     public Optional<Game> update(Game newGame) {
 
-        return gameRepository.findByName(newGame.getName()).map( game -> {
+        return gameRepository.findByName(newGame.getName()).map(game -> {
             game.setName(newGame.getName());
             game.setSummary(newGame.getSummary());
             game.setPrice(newGame.getPrice());
