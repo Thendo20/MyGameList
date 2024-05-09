@@ -3,7 +3,10 @@ package org.packt.mygamelist.services;
 import org.packt.mygamelist.domain.Game;
 import org.packt.mygamelist.domain.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,15 +52,20 @@ public class GameService {
         return gameRepository.findByPrice(price);
     }
 
-    public List<Game> findByIsGameAvail(boolean isGameAvail) {
-        return gameRepository.findByIsGameAvail(isGameAvail);
+    public List<Game> findByGameAvail(boolean gameAvail) {
+        return gameRepository.findByGameAvail(gameAvail);
     }
 
     public Game create(Game game) {
         return gameRepository.save(game);
     }
 
-    public void delete(String name) {
+    public void delete(Long id) {
+        gameRepository.deleteById(id);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = { Exception.class })
+    public void deleteByName(String name) {
         gameRepository.deleteByName(name);
     }
 
@@ -67,7 +75,7 @@ public class GameService {
             game.setName(newGame.getName());
             game.setSummary(newGame.getSummary());
             game.setPrice(newGame.getPrice());
-            game.setIsGameAvail(newGame.getIsGameAvail());
+            game.setGameAvail(newGame.isGameAvail());
             game.setPlatforms(newGame.getPlatforms());
 
             return gameRepository.save(game);

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface GameRepository extends CrudRepository<Game, Long> {
     Optional<Game> findByName(String name);
 
-    List<Game> findByIsGameAvail(boolean isGameAvail);
+    List<Game> findByGameAvail(boolean gameAvail);
 
     List<Game> findByPrice(int price);
 
