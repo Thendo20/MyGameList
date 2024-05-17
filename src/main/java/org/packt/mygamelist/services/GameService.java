@@ -2,8 +2,6 @@ package org.packt.mygamelist.services;
 
 import org.packt.mygamelist.domain.Game;
 import org.packt.mygamelist.domain.GameRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +13,7 @@ import java.util.Optional;
 @Service
 public class GameService {
     private final GameRepository gameRepository;
+
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
         this.gameRepository.saveAll(defaultGames());
@@ -64,7 +63,7 @@ public class GameService {
         gameRepository.deleteById(id);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = { Exception.class })
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {Exception.class})
     public void deleteByName(String name) {
         gameRepository.deleteByName(name);
     }

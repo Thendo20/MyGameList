@@ -21,16 +21,15 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GameServiceTest {
+    private final String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
+            "entangled with some of the most frightening and deranged elements of the criminal underworld," +
+            "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
+            "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
     @Mock
     private GameRepository gameRepository;
     @InjectMocks
     private GameService gameService;
     private AutoCloseable autoCloseable;
-
-    private final String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
-            "entangled with some of the most frightening and deranged elements of the criminal underworld," +
-            "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
-            "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
 
     @BeforeEach
     void init() {

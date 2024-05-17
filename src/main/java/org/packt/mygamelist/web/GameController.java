@@ -2,7 +2,6 @@ package org.packt.mygamelist.web;
 
 import org.packt.mygamelist.domain.Game;
 import org.packt.mygamelist.services.GameService;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,11 +22,10 @@ public class GameController {
 
     @GetMapping
     public ResponseEntity<List<Game>> getGames(@RequestParam(value = "gameAvail", required = false) Boolean gameAvail) {
-        if(gameAvail == null) {
+        if (gameAvail == null) {
             List<Game> games = gameService.findAll();
             return ResponseEntity.ok().body(games);
-        }
-        else {
+        } else {
             List<Game> games = gameService.findByGameAvail(gameAvail);
             return ResponseEntity.ok().body(games);
         }
@@ -39,22 +37,18 @@ public class GameController {
         return ResponseEntity.ok().body(game);
     }
 
-    @GetMapping("/price/{price}")
+    @GetMapping("/byPrice/{price}")
     public ResponseEntity<List<Game>> getGamesByPrice(@PathVariable("price") int price) {
         List<Game> games = gameService.findByPrice(price);
         return ResponseEntity.ok().body(games);
     }
 
-//    @GetMapping("/{gameAvail}")
-//    public ResponseEntity<List<Game>> getGamesByGameAvail(@RequestParam("gameAvail") boolean IsGameAvail) {
-//        List<Game> games = gameService.findByGameAvail(IsGameAvail);
-//        return ResponseEntity.ok().body(games);
-//    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Game> deleteGameById(@PathVariable("id") Long id) {
         gameService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
     @DeleteMapping("/byName/{name}")
     public ResponseEntity<Game> deleteGameByName(@PathVariable("name") String name) {
         gameService.deleteByName(name);
@@ -65,7 +59,7 @@ public class GameController {
     public ResponseEntity<Game> updateGame(@RequestBody Game updatedGame) {
         Optional<Game> updated = gameService.update(updatedGame);
         return updated
-                .map(value-> ResponseEntity.ok().body(value)).orElseGet(()-> {
+                .map(value -> ResponseEntity.ok().body(value)).orElseGet(() -> {
                     Game created = gameService.create(updatedGame);
                     URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                             .path("{name}")
