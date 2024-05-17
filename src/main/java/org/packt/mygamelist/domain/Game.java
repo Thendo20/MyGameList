@@ -24,8 +24,8 @@ public class Game {
     @Column
     private int price;
 
-    @Column(nullable = false)
-    private boolean IsGameAvail;
+    @Column(nullable = false, name = "is_game_avail")
+    private boolean gameAvail;
 
     @Column
     private String platforms;
@@ -34,15 +34,11 @@ public class Game {
     private List<AppUser> users;
 
 
-    public Game(String name, String summary, int price, boolean IsGameAvail, String platforms) {
+    public Game(String name, String summary, int price, boolean gameAvail, String platforms) {
         this.name = name;
         this.summary = summary;
         this.price = price;
-        this.IsGameAvail = IsGameAvail;
+        this.gameAvail = gameAvail;
         this.platforms = platforms;
-    }
-
-    public Boolean getIsGameAvail() {
-        return IsGameAvail;
     }
 }

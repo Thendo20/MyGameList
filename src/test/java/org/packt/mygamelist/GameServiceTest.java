@@ -21,16 +21,15 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GameServiceTest {
+    private final String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
+            "entangled with some of the most frightening and deranged elements of the criminal underworld," +
+            "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
+            "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
     @Mock
     private GameRepository gameRepository;
     @InjectMocks
     private GameService gameService;
     private AutoCloseable autoCloseable;
-
-    private final String summary = "When a young street hustler,a retired bank robber, and a terrifying psychopath find themselves" +
-            "entangled with some of the most frightening and deranged elements of the criminal underworld," +
-            "the U.S. Government, and the entertainment industry, they must pull off a series of dangerous" +
-            "heists to survive in a ruthless city in which they can trust nobody--least of all one another.";
 
     @BeforeEach
     void init() {
@@ -102,16 +101,16 @@ public class GameServiceTest {
     @Test
     void findGameByIsGameAvail() {
 
-        when(gameRepository.findByIsGameAvail(anyBoolean())).thenReturn(List.of(new Game("GTA 5", summary, 500, true,
+        when(gameRepository.findByGameAvail(anyBoolean())).thenReturn(List.of(new Game("GTA 5", summary, 500, true,
                 "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows")));
 
-        List<Game> games = gameService.findByIsGameAvail(true);
-        assertThat(games.getFirst().getIsGameAvail()).isEqualTo(true);
+        List<Game> games = gameService.findByGameAvail(true);
+        assertThat(games.getFirst().isGameAvail()).isEqualTo(true);
     }
 
     @Test
     void deleteGame() {
-        gameService.delete("GTA 5");
-        verify(gameRepository, times(1)).deleteByName(anyString());
+        gameService.delete(1L);
+        verify(gameRepository, times(1)).deleteById(anyLong());
     }
 }
