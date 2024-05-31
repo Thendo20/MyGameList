@@ -95,7 +95,7 @@ public class GameServiceTest {
                 "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows")));
         List<Game> games = gameService.findByPrice(500);
         assertThat(games.size() > 0).isTrue();
-        assertThat(games.getFirst().getName()).isEqualTo("GTA 5");
+        assertThat(games.get(0).getName()).isEqualTo("GTA 5");
     }
 
     @Test
@@ -105,7 +105,7 @@ public class GameServiceTest {
                 "Playstation 3/4/5, Xbox 360/one/series s/series x, Windows")));
 
         List<Game> games = gameService.findByGameAvail(true);
-        assertThat(games.getFirst().isGameAvail()).isEqualTo(true);
+        assertThat(games.get(0).isGameAvail()).isEqualTo(true);
     }
 
     @Test

@@ -23,8 +23,17 @@ public class AppUser {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = false)
+    private String name;
+
+    @Column(nullable = false, unique = false)
+    private String surname;
+
+    @Column(nullable = false, unique = true)
     private String password;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column
     private int NoLikedGames = 0;
@@ -42,8 +51,9 @@ public class AppUser {
     private List<Game> games;
 
 
-    public AppUser(String username, String password) {
+    public AppUser(String username, String name, String surname, String password, String email) {
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 }

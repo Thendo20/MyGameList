@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: MyGameList
+  description: Website showing current and upcoming games. Users can mark their favourite or most anticipated games.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Game
+    description: game specific data
+paths:
+  /api/games:
+    get:
+      tags:
+        - Game
+      summary: get all available and unavailable games
+      description: Update an existing pet by Id
+      operationId: getAllGames
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+        '400':
+          description: Invalid request
+        '404':
+          description: Games not found
+        '422':
+          description: Validation exception
+  /api/games/game/{name}:
+    get:
+      tags:
+        - Game
+      summary: get a single game
+      description: Update an existing pet by Id
+      operationId: getGame
+      parameters:
+        - name: name
+          in: path
+          description: name of game to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '400':
+          description: Invalid name provided
+        '404':
+          description: Game not found
+  /api/games/game/byPrice/{price}:
+    get:
+      tags:
+        - Game
+      summary: get a single game by price
+      description: Update an existing pet by Id
+      operationId: getGameByPrice
+      parameters:
+        - name: price
+          in: path
+          description: price of game to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+        '400':
+          description: Invalid price provided
+        '404':
+          description: Game not found
+#/api/games/:
+#  post:
+#    tags:
+#      - Game
+#    summary: create a new game
+#    description: Update an existing pet by Id
+#    operationId: createGame
+#    requestBody:
+#      content:
+#        application/json:
+#          schema:
+#            $ref: '#/components/schemas/Game'
+
+components:
+  schemas:
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        summary:
+          type: string
+        price:
+          type: integer
+          format: int64
+        platforms:
+          type: string
+        gameAvail:
+          type: boolean
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        password:
+          type: string
+        NoLikedGames:
+          type: integer
+          format: int64
+        games:
+          type: array
+          items:
+            $ref: '#/components/schemas/Game'
+    UserError:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
